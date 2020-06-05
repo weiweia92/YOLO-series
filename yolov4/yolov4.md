@@ -16,9 +16,9 @@ Neck主要是对特征进行融合，这里有很多技巧在
 对于改进CNN通常使用一下方法:   
 1.activation:ReLU, leaky-ReLU, (parametric-ReLU and SELU训练难度大,ReLU6专门量化网络的设计,没选用这3个激活函数), Swish,or **Mish**  
    
-2.bbox regression loss:MSE, IoU->GIoU->DIoU->CIoU    
+2.bbox regression loss:MSE, IoU->GIoU->DIoU->CIoU  
 
-3.data augumentation:CutOut, **MixUp**, **CutMix**  
+3.data augumentation:CutOut, **MixUp**, **CutMix**, **Mosaic**.   
 ![](https://github.com/weiweia92/pictures/blob/master/Screenshot%20from%202020-06-05%2014-50-36.png)
 4.regulation:DropOut, DropPath, Spatial DropOut ,or **DropBlock**  
 Dropout:整体随便扔    
