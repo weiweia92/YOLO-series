@@ -42,7 +42,7 @@ YOLO作为一个统计检测算法，整幅图是直接输入网络的。因为�
 ### 5.后处理　　　
 测试样本时，有些物体会被多个单元检测到，NMS用于解决这个问题。 
 
-![Screenshot_from_2020-05-19_14-01-13](/uploads/932bc5291368cfc8bb12e587067b96f6/Screenshot_from_2020-05-19_14-01-13.png) 
+![](https://github.com/weiweia92/pictures/blob/master/Screenshot%20from%202020-06-05%2013-49-58.png) 
 ### YOLO优点：　　
 1.YOLO检测物体非常快 　
  
