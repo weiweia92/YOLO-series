@@ -15,34 +15,30 @@
 ![](https://github.com/weiweia92/pictures/blob/master/Screenshot%20from%202020-06-05%2010-43-13.png) 
 
 同时，YOLO也预测检测物体为某一类C的条件概率：Pr(class(i)|object)  
-![Screenshot_from_2020-05-19_13-56-22](/uploads/1aa25a1fbe4f3ea0baf1379ec7ee2aa6/Screenshot_from_2020-05-19_13-56-22.png)  
+![](https://github.com/weiweia92/pictures/blob/master/Screenshot%20from%202020-06-05%2010-43-37.png)  
 
 对于每一个单元，YOLO值计算一个分类概率，而与B的值无关。在测试时  
-![Screenshot_from_2020-05-19_13-32-45](/uploads/6b5489ca9b24ed1f007ed8c0542d9b5d/Screenshot_from_2020-05-19_13-32-45.png)  
-![Screenshot_from_2020-05-19_13-37-37](/uploads/ce0d43627d375b90058e98ae1b21cb3c/Screenshot_from_2020-05-19_13-37-37.png)
+![](https://github.com/weiweia92/pictures/blob/master/Screenshot%20from%202020-06-05%2010-43-52.png)  
 ### 2.输入层　　
 YOLO作为一个统计检测算法，整幅图是直接输入网络的。因为检测需要更细粒度的图像特征，YOLO将图像Resize到了448\*448而不是物体分类中常用的224\*224的尺寸。需要注意的是YOLO并没有采用VGG中先将图像等比例缩放再裁剪的形式，而是直接将图片非等比例resize。所以YOLO的输出图片的尺寸并不是标准比例的。 
 ### 3.骨干架构：VGG,leaky-relu  
-![Screenshot_from_2020-05-19_11-22-22](/uploads/fdd2726b07852066eb04a645b384fb6c/Screenshot_from_2020-05-19_11-22-22.png)  
-![Screenshot_from_2020-05-19_11-23-21](/uploads/79cf7a8c1bfad3c3bd1966a8561b76bf/Screenshot_from_2020-05-19_11-23-21.png)
+![](https://github.com/weiweia92/pictures/blob/master/Screenshot%20from%202020-06-05%2010-44-32.png)  
 然而现在的一些文章指出leaky ReLU并不是那么理想，现在尝试网络超参数时ReLU依旧是首选。　　
 ### 4.Loss function  
 #### loss = classification loss + localization loss + confidence loss  
 #### classification loss  
-![Screenshot_from_2020-05-19_11-18-10](/uploads/bc5599400bbd5f48e04a933d07d755d6/Screenshot_from_2020-05-19_11-18-10.png)  
-![Screenshot_from_2020-05-19_14-03-21](/uploads/2e08354c30003a2da7a43457213e3d24/Screenshot_from_2020-05-19_14-03-21.png)
+![](https://github.com/weiweia92/pictures/blob/master/Screenshot%20from%202020-06-05%2010-44-53.png)
 #### localization loss  
-![Screenshot_from_2020-05-19_11-19-00](/uploads/2727bda5f0d4e2b2b45d6e48a5636a16/Screenshot_from_2020-05-19_11-19-00.png)  
+![](https://github.com/weiweia92/pictures/blob/master/Screenshot%20from%202020-06-05%2010-45-00.png)  
 对不同大小的bbox预测中，相比于大bbox预测偏一点，小box预测偏一点更不能忍受。而sum-square error loss中对同样的偏移loss是一样。 为了缓和这个问题，作者用了一个比较取巧的办法，就是将box的width和height取平方根代替原本的height和width。 如下图：small bbox的横轴值较小，发生偏移时，反应到y轴上的loss（下图绿色）比big box(下图红色)要大。
-![Screenshot_from_2020-05-19_13-59-43](/uploads/e2a41dfad3c62b7e9f93dc6a1c27e5dd/Screenshot_from_2020-05-19_13-59-43.png)
+![](https://github.com/weiweia92/pictures/blob/master/Screenshot%20from%202020-06-05%2010-45-06.png)
 
 为了更加强调边界框的准确性，我们设定lambda(coord)=5(default)  
 #### confidence loss  
-![Screenshot_from_2020-05-19_11-16-47](/uploads/9d8cdf021f8c752414e5b0b59992133f/Screenshot_from_2020-05-19_11-16-47.png)  
-![Screenshot_from_2020-05-19_14-02-37](/uploads/9abb8b2cb1c61c23d62cf7ce00d45b20/Screenshot_from_2020-05-19_14-02-37.png) 
+![](https://github.com/weiweia92/pictures/blob/master/Screenshot%20from%202020-06-05%2010-45-12.png)  
 许多bbox不包含任何物体，这造成了类别不平衡问题，eg:我们训练的模型检测到背景的情况会比物体的情况多的多，为了解决这个问题，我们设定lambda(noobj)=0.5(default)  
 
-![Screenshot_from_2020-05-19_11-06-07](/uploads/f7fd84c2891fb1d0f7139b88a1d0ed06/Screenshot_from_2020-05-19_11-06-07.png)  
+![](https://github.com/weiweia92/pictures/blob/master/Screenshot%20from%202020-06-05%2010-45-21.png)  
 ### 5.后处理　　　
 测试样本时，有些物体会被多个单元检测到，NMS用于解决这个问题。 
 
