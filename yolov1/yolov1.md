@@ -7,14 +7,12 @@
 网络最后的输出是 S×S×30 的数据块，yolov1是含有全连接层的，这个数据块可以通过reshape得到。也就是说，输出其实已经丢失了位置信息（在v2，v3中用全卷积网络，每个输出点都能有各自对应的感受野范围）。yolov1根据每张图像的目标label，编码出一个 S×S×(B\*5+20) 的数据块，然后让卷积网络去拟合这个target
 ### 1.S\*S 框
 如果Ground Truth的中心落在某个单元（cell）内，则该单元负责该物体的检测  
-https://github.com/weiweia92/pictures/blob/master/Screenshot%20from%202020-06-05%2010-42-06.png
-![Screenshot_from_2020-05-19_11-20-52](/uploads/13f2ee2eb8a01cfbfbd02674aefaf401/Screenshot_from_2020-05-19_11-20-52.png)  
-![Screenshot_from_2020-05-19_11-21-21](/uploads/2ee56db6e6704d572b2ca1bf64206d3e/Screenshot_from_2020-05-19_11-21-21.png)  
-我们将输出层Os\*s\*(c+B\*5) 看做一个三维矩阵，如果物体的中心落在第 (i,j) 个单元内，那么网络只优化一个 C+B\*5维的向量，即向量 O[i,j,:] 。 S 是一个超参数，在源码中 S=7 
-B是每个单元预测的bounding box的数量，B的个数同样是一个超参数，YOLO使用多个bounding box是为了每个cell计算top-B个可能的预测结果，这样做虽然牺牲了一些时间，但却提升了模型的检测精度。  
+![](https://github.com/weiweia92/pictures/blob/master/Screenshot%20from%202020-06-05%2010-42-06.png)
+![](https://github.com/weiweia92/pictures/blob/master/Screenshot%20from%202020-06-05%2010-42-47.png)  
+我们将输出层Os\*s\*(c+B\*5) 看做一个三维矩阵，如果物体的中心落在第 (i,j) 个单元内，那么网络只优化一个 C+B\*5维的向量，即向量 O[i,j,:] 。 S 是一个超参数，在源码中 S=7,B是每个单元预测的bounding box的数量，B的个数同样是一个超参数，YOLO使用多个bounding box是为了每个cell计算top-B个可能的预测结果，这样做虽然牺牲了一些时间，但却提升了模型的检测精度。  
 
 每个bounding box要预测5个值：bounding box(cx,cy,w,h)以及置信度P,定义confidence为Pr(object)\*IOU(pred,truth)。bbox的形状是任意猜测的，这也是后续yolov2进行优化的一个点。置信度P表示bounding box中物体为待检测物体的概率以及bounding box对该物体的覆盖程度的乘积 Pr(Object) * IOU(pred, truth)。其中(cx,cy)是bounding box相对于每个cell中心的相对位置， (w,h)是物体相对于整幅图的尺寸,范围均为[0,1]。  
-![Screenshot_from_2020-05-19_12-05-28](/uploads/af74e3bd556de108693b07953c0d7c0b/Screenshot_from_2020-05-19_12-05-28.png) 
+![](https://github.com/weiweia92/pictures/blob/master/Screenshot%20from%202020-06-05%2010-43-13.png) 
 
 同时，YOLO也预测检测物体为某一类C的条件概率：Pr(class(i)|object)  
 ![Screenshot_from_2020-05-19_13-56-22](/uploads/1aa25a1fbe4f3ea0baf1379ec7ee2aa6/Screenshot_from_2020-05-19_13-56-22.png)  
