@@ -4,7 +4,7 @@
 
 2.Bag-of-Freebies and Bag-of-Specials
 
-Bag-of-Freebies:指目标检测器在不增加推理损耗的情况下达到更好的精度，这些方法称为只需转变训练策略或只增加训练量成本。也就是说数据增扩、类标签平滑(Class label smoothing)、Focal Loss等这些不用改变网络结构的方法 
+Bag-of-Freebies:指目标检测器在不增加推理损耗的情况下达到更好的精度，这些方法称为只需转变训练策略或只增加训练量成本。也就是说数据增广、类标签平滑(Class label smoothing)、Focal Loss等这些不用改变网络结构的方法   
 Bag-of-Special:用最新最先进的方法（网络模块）来魔改检测模型--插入模块是用来增强某些属性的，显著提高目标检测的准确性。比如SE模块等注意力机制模块，还有FPN等模块。  
 
 3.除了在模型上进行魔改，作者还加了其他的技巧   
@@ -58,7 +58,7 @@ CmBN:
 CSPDarknet53借鉴CSPNet,CSPNet全称是Cross Stage Paritial Network，主要从网络结构设计的角度解决推理中从计算量很大的问题。CSPNet的作者认为推理计算过高的问题是由于网络优化中的梯度信息重复导致的  
 ![](https://github.com/weiweia92/pictures/blob/master/Screenshot%20from%202020-06-05%2014-50-54.png)  
 yolov4创新点:   
-（1）输入端：这里指的创新主要是训练时对输入端的改进，主要包括**Mosaic数据增强、cmBN、SAT自对抗训练**。
+（1）输入端：这里指的创新主要是训练时对输入端的改进，主要包括**Mosaic数据增强、cmBN、SAT自对抗训练**.  
 （2）BackBone主干网络：将各种新的方式结合起来，包括：**CSPDarknet53、Mish激活函数、Dropblock**
 （3）Neck：目标检测网络在BackBone和最后的输出层之间往往会插入一些层，比如Yolov4中的SPP模块、FPN+PAN结构
 （4）Prediction：输出层的锚框机制和Yolov3相同，主要改进的是训练时的损失函数CIOU_Loss，以及预测框筛选的nms变为DIOU_nms  
