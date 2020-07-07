@@ -48,8 +48,8 @@ b. 减少GPU：可能会有人说，随机缩放，普通的数据增强也可�
  
 4.BN-->CBN-->**CmBN**  
 CBN:  
-(1)作者认为连续几次训练iteration中模型参数的变化是平滑的
-(2)作者将前几次iteration的BN参数保存起来，当前iteration的BN参数由当前batch数据求出的BN参数和保存的前几次的BN参数共同推算得出(Cross-Interation BN)
+(1)作者认为连续几次训练iteration中模型参数的变化是平滑的  
+(2)作者将前几次iteration的BN参数保存起来，当前iteration的BN参数由当前batch数据求出的BN参数和保存的前几次的BN参数共同推算得出(Cross-Interation BN)  
 (3)训练前期BN参数记忆长度短一些，后期训练稳定了可以保存更长时间的BN参数来参与推算，效果更好  
 CmBN:  
 ![](https://github.com/weiweia92/pictures/blob/master/Screenshot%20from%202020-06-05%2014-50-48.png)  
@@ -59,8 +59,8 @@ CSPDarknet53借鉴CSPNet,CSPNet全称是Cross Stage Paritial Network，主要从
 ![](https://github.com/weiweia92/pictures/blob/master/Screenshot%20from%202020-06-05%2014-50-54.png)  
 yolov4创新点:   
 （1）输入端：这里指的创新主要是训练时对输入端的改进，主要包括**Mosaic数据增强、cmBN、SAT自对抗训练**.  
-（2）BackBone主干网络：将各种新的方式结合起来，包括：**CSPDarknet53、Mish激活函数、Dropblock**
-（3）Neck：目标检测网络在BackBone和最后的输出层之间往往会插入一些层，比如Yolov4中的SPP模块、FPN+PAN结构
+（2）BackBone主干网络：将各种新的方式结合起来，包括：**CSPDarknet53、Mish激活函数、Dropblock**  
+（3）Neck：目标检测网络在BackBone和最后的输出层之间往往会插入一些层，比如Yolov4中的SPP模块、FPN+PAN结构  
 （4）Prediction：输出层的锚框机制和Yolov3相同，主要改进的是训练时的损失函数CIOU_Loss，以及预测框筛选的nms变为DIOU_nms  
 ### backbone主干网络创新   
 **CSPDarknet网络结构**    
